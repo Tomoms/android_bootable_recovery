@@ -546,8 +546,6 @@ int main(int argc, char** argv) {
       }
     }
 
-    ui->SetEnableFastbootdLogo(fastboot);
-
     auto ret = fastboot ? StartFastboot(device, args) : start_recovery(device, args);
 
     if (ret == Device::KEY_INTERRUPTED) {
@@ -611,6 +609,7 @@ int main(int argc, char** argv) {
       case Device::ENTER_RECOVERY:
         LOG(INFO) << "Entering recovery";
         fastboot = false;
+        ui->SetEnableFastbootdLogo(fastboot);
         device->GoHome();
         break;
 
