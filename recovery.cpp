@@ -250,6 +250,18 @@ int set_slot(Device* device) {
     }
   }
   return ret.success ? 0 : 1;
+
+bool ask_to_continue_spl_downgrade(Device* device) {
+  if (get_build_type() == "user") {
+    return false;
+  } else {
+    device->GetUI()->SetProgressType(RecoveryUI::EMPTY);
+    return yes_no(device,
+      "WARNING: Security patch level downgrade detected. "
+      "This may require formatting data. "
+      "Device may brick if hardware rollback protection is enabled. ",
+      "Install anyway?");
+  }
 }
 
 static bool ask_to_wipe_data(Device* device) {
